@@ -34,7 +34,7 @@ public:
 
 
 string SocketIO::read() {
-    char client_message[4096];
+    char client_message[4096]={0};
     long bytes = recv(socket_descriptor, client_message, sizeof(client_message), 0);
     if (bytes > 0) {
         string message(client_message);
