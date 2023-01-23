@@ -1,0 +1,7 @@
+# ninja log v5
+10	239	1674588020968568574	CMakeFiles/knn_clientServer.dir/Client/Client.cpp.o	205b44fd5bb92bf3
+3	420	1674588105378323252	CMakeFiles/knn_clientServer.dir/Server/Server.cpp.o	b1aedb4cd5360b19
+420	458	1674588105418234125	knn_clientServer	9b9aab0bcb72da7c
+18	223	1674590109722837200	CMakeFiles/knn_clientServer.dir/Client/Client.cpp.o	c6c69651797dbc0b
+17	703	1674590110203051694	CMakeFiles/knn_clientServer.dir/Server/Server.cpp.o	ae0a8924e2d3b9f0
+703	756	1674590110258314174	knn_clientServer	9b9aab0bcb72da7c

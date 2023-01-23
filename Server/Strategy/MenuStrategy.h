@@ -26,7 +26,6 @@ public:
 
 };
 
-
 class InitializeStrategy : public MenuStrategy {
 public:
     // in a real environment one should pass Capabilities array and send their description...
@@ -70,8 +69,17 @@ private:
 public:
     // in a real environment one should pass Capabilities array and send their description...
     void perform(int client_sock, ClientModel* client, DefaultIO* io)  override {
+        client -> trainFlower.clear();
+        client -> testFlower.clear();
+        client -> k_closets.clear();
 
         std::string message = io->read();
+        if (message.at(0) == '0') {
+            client -> trainFlower.clear();
+            client -> testFlower.clear();
+            return;
+        }
+
         while (!message.empty() && !std::equal(message.begin(), message.end(), "1")) {
             parse(message, client, true);
             ::send(client_sock, "1", 1, 0);
@@ -84,6 +92,12 @@ public:
         message.clear();
 
         message = io->read();
+        if (message.at(0) == '0') {
+            client -> trainFlower.clear();
+            client -> testFlower.clear();
+            return;
+        }
+
         while (!message.empty() && !std::equal(message.begin(), message.end(), "1")) {
             parse(message, client, false);
             ::send(client_sock, "1", 1, 0);
@@ -140,12 +154,26 @@ public:
     void perform(int client_sock, ClientModel* client, DefaultIO* io)  override {
         if (client -> trainFlower.empty()) {
             std::string m = "please upload data";
+            m.push_back('\0');
             ::send(client_sock, m.c_str(), m.length(), 0);
+            return;
         }
 
         if (client -> k_closets.empty()) {
             std::string m = "please classify data";
+            m.push_back('\0');
             ::send(client_sock, m.c_str(), m.length(), 0);
+            return;
+        }
+
+        std::string m = "1";
+        m.push_back('\0');
+        ::send(client_sock, m.c_str(), m.length(), 0);
+
+        std::string f = io->read();
+
+        if(!std::equal(f.begin(),f.end(), "1")) {
+            return;
         }
 
         for (int i = 0 ; i < client->k_closets.size() ; i++) {

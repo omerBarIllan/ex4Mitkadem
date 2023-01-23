@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <sys/socket.h>
 #include <cstdio>
@@ -9,7 +8,8 @@
 #include <arpa/inet.h>
 #include <thread>
 #include <algorithm>
-#include "../utils.h"
+#include <sstream>
+
 using namespace std;
 
 static string m;
@@ -47,6 +47,19 @@ void option5(int sock) {
     std::string res;
     char message[100] = {0};
 
+    if (recv(sock, message, sizeof(message), 0) <= 0) {
+        ::perror("something went wrong");
+        return;
+    }
+
+    if (message[0] != '1') {
+        cout << message << endl;
+        return;
+    }
+
+    ::memset(message, 0, sizeof(message));
+    ::send(sock, "1", 1, 0);
+
     while (!single_test.empty() && !equal(single_test.begin(), single_test.end(), "0")) {
         long bytes = recv(sock, message, sizeof(message), 0);
         if (bytes <= 0) {
@@ -79,6 +92,18 @@ void option5(int sock) {
 void option4(int sock) {
     std::string single_test = "temp";
     char message[100] = {0};
+    if (recv(sock, message, sizeof(message), 0) <= 0) {
+        ::perror("something went wrong");
+        return;
+    }
+
+    if (message[0] != '1') {
+        cout << message << endl;
+        return;
+    }
+
+    ::memset(message, 0, sizeof(message));
+    ::send(sock, "1", 1, 0);
 
     while (!single_test.empty() && !equal(single_test.begin(), single_test.end(), "0")) {
         long bytes = recv(sock, message, sizeof(message), 0);
@@ -91,8 +116,13 @@ void option4(int sock) {
         if(equal(single_test.begin(), single_test.end(), "0")) {
             continue;
         }
+        if (single_test.at(single_test.size() - 1) == '\n' || single_test.at(single_test.size() - 1) == '\r' ) {
+            cout << message;
+        }else {
+            cout << message << endl;
 
-        cout << message << endl;
+        }
+
         string success = "1";
         success.push_back('\0');
         ::send(sock, success.c_str(), success.size(), 0);
@@ -138,6 +168,12 @@ void option1(int sock, bool is_train) {
 
 
     std::ifstream file(csv);
+    if(!file) {
+        cout << "invalid input" << endl;
+        ::send(sock, "0", 1, 0);
+        return;
+    }
+
     string line;
     while (std::getline(file, line)) {
         line.push_back('\0');

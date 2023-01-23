@@ -1,4 +1,4 @@
-# Install script for directory: /Users/saarazari/Desktop/knn_clientServer
+# Install script for directory: /Users/saarazari/Desktop/cs-barIlan/advanced_programming/ex4Mitkadem
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/saarazari/Desktop/knn_clientServer/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/saarazari/Desktop/cs-barIlan/advanced_programming/ex4Mitkadem/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

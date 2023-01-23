@@ -16,9 +16,7 @@ private:
     std::map<std::string,int> k_closets;
     
     void initialize_k_closets() {
-        k_closets.insert(std::pair<std::string, int>("Iris-setosa\0",0));
-        k_closets.insert(std::pair<std::string, int>("Iris-virginica\0",0));
-        k_closets.insert(std::pair<std::string, int>("Iris-versicolor\0",0));
+        k_closets.clear();
     }
     
     std::string knn(const Flower& flower,int k, distanceType type ,std::vector<Flower> data);
